@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block 'head' %}
+    <link rel="stylesheet" href="{% static 'autenticacao/css/css.css' %}">
+{% endblock %}
+
+{% block 'titulo' %}Login{% endblock %}
+
+{% block 'body' %}
+    <div class="container">
+        <span class="titulo">Bem-vindo Nutricionista!!</span>
+        <div class="corpo">
+            <main class="main">
+                <img src="{% static 'autenticacao/img/pngwing.com (2).png' %}" alt="">
+                <h3 class="h3">Nutrifood</h3>
+                <p class="p">Conectando nutricionistas e pacientes, e convidando-os a trabalharem juntos através de uma única ferramenta.</p>
+            </main>
+            <aside class="aside">
+                <form action="" method="POST">
+                    <input class="input" name="usuario" type="text" placeholder="Digite seu usuário...">
+                    <br>
+                    <input class="input" name="senha" type="password" placeholder="Digite sua senha...">
+                    <br>
+                    <button class="button">Logar</button>
+                </form>
+            </aside>
+        </div>
+        
+    </div>
+
+{% endblock %}

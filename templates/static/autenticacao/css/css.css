@@ -20,9 +20,7 @@
     border-radius: 8px;
     background-color: #fff;
     flex-direction: column;
-    
-    
-    
+   
 }
 
 .main {
@@ -56,9 +54,9 @@
     color: #1AB394;
 }
 
-.p {
+.paragrafo {
     font-family: 'Roboto', sans-serif;
-    text-align: justify;
+    text-align: justify;   
 }
 
 .corpo {
@@ -111,7 +109,7 @@
 }
 
 
-@media screen and (max-width: 1025px) {
+@media screen and (max-width: 800px) {
     .body {
         background-size: 0%;
     }
@@ -124,6 +122,10 @@
 
     .titulo {
         margin-left: 15%;
+    }
+
+    .input {
+        width: 250px;
     }
     
 }
@@ -149,7 +151,7 @@
     }
 
     .input {
-        width: 250px;
+        width: 200px;
     }
 
     .button {
@@ -164,11 +166,9 @@
         margin-left: 10%;
     }
 
-    
 
-    .p {
+    .paragrafo {
         font-size: 10px;
     }
 }
-
 

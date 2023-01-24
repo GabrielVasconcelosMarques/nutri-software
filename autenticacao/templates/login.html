@@ -11,19 +11,27 @@
 {% block 'body' %}
     <div class="container-home">
         <span class="titulo">Bem-vindo Nutricionista!!</span>
+        {% if messages %}
+            <br>
+                {% for message in messages %}
+                    <div class="alert {{message.tags}}">
+                        <span>{{message}}</span>
+                    </div>
+                {% endfor %}
+        {% endif %}
         <div class="corpo">
-            <main class="main">
+            <main class="principal">
                 <img src="{% static 'autenticacao/img/pngwing.com (2).png' %}" alt="">
-                <h3 class="h3">Nutrifood</h3>
+                <h3 class="subtitulo">Nutrifood</h3>
                 <p class="paragrafo">Conectando nutricionistas e pacientes, e convidando-os a trabalharem juntos através de uma única ferramenta.</p>
             </main>
-            <aside class="aside">
-                <form action="" method="POST">
-                    <input class="input" name="usuario" type="text" placeholder="Digite seu usuário...">
+            <aside class="lateral">
+                <form action="{% url 'login' %}" method="POST">{% csrf_token %}
+                    <input class="entrada" name="usuario" type="text" placeholder="Digite seu usuário...">
                     <br>
-                    <input class="input" name="senha" type="password" placeholder="Digite sua senha...">
+                    <input class="entrada" name="senha" type="password" placeholder="Digite sua senha...">
                     <br>
-                    <button class="button">Logar</button>
+                    <button class="botao">Logar</button>
                 </form>
             </aside>
         </div>

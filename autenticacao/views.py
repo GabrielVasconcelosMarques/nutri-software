@@ -20,7 +20,7 @@ def login(request):
             return redirect('/auth/login')
         else:
             auth.login(request, usuario)
-            return redirect('/')
+            return redirect('/paciente/')
 
 def logout(request):
     auth.logout(request)

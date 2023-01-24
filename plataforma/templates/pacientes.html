@@ -4,9 +4,43 @@
 
 {% block 'plataforma' %}
     <br>
+    {% if messages %}
+        <br>
+            {% for message in messages %}
+                <div class="alert {{message.tags}}">
+                    <span>{{message}}</span>
+                </div>
+            {% endfor %}
+    {% endif %}
     <button type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#modal">
         Novo paciente
     </button>
+
+    
+        <br>
+        <br>
+        <div class="row">
+        {% for paciente in pacientes %}
+            <div class="col-md-4" style="margin-bottom: 5%;">
+                <a href="{% url 'dados_paciente' paciente.id %}" class="link-hover">
+                    <div class="card-paciente">
+                        <div class="foto-perfil">
+                            {% if paciente.sexo == 'M' %}
+                                <img src="{% static 'plataforma/img/male.png' %}">
+                            {% else %}
+                                <img src="{% static 'plataforma/img/female.png' %}">
+                            {% endif %}
+                        </div>
+                        <br>
+                        <p class="dados">{{paciente.nome}}</p>
+                        <p class="dados">{{paciente.idade}} Anos</p>
+                    </div>
+                </a>
+            </div>
+        {% endfor %}
+        </div>
+        
+    
 
     <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -19,7 +53,7 @@
                 </div>
 
                 <div class="modal-body">
-                    <form action="" method="POST">
+                    <form action="{% url 'pacientes' %}" method="POST">{% csrf_token %}
                         <div class="row">
                             <div class="col-md-3">
                                 <img style="width: 70px;" src="{% static 'plataforma/img/avatar.png' %}">

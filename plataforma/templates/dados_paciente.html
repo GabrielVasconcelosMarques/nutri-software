@@ -31,28 +31,137 @@
     
     <br>
     <br>
-    <table class="table table-striped">
-        <thead>
-            <tr>
-            <th scope="col">Peso</th>
-            <th scope="col">Altura</th>
-            <th scope="col">IMC</th>
-            <th scope="col">% músculo</th>
-            </tr>
-        </thead>
-        <tbody>
-            
-                {% for dado in dados_paciente %}
+    
+    {% for dado in dados_paciente %}
+        <span>Circunferências</span>
+        <table class="table table-striped">
+            <thead>
                 <tr>
-                    <th scope="row">{{dado.peso}} Kg</th>
-                    <td>173 cm</td>
-                    <td>19%</td>
-                    <td>25%</td>
+                <th scope="col">Peso</th>
+                <th scope="col">Altura</th>
+                <th scope="col">Peitoral</th>
+                <th scope="col">Abdômen</th>
+                <th scope="col">Cintura</th>
+                <th scope="col">Quadril</th>
+                
                 </tr>
-                {% endfor %}
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                
+                    {% for dado in dados_paciente %}
+                    <tr>
+                        <th scope="row">{{dado.peso}}</th>
+                        <td>{{dado.altura}}</td>
+                        <td>{{dado.peitoral}}</td>
+                        <td>{{dado.abdomen}}</td>
+                        <td>{{dado.cintura}}</td>
+                        <td>{{dado.quadril}}</td>
+                        
+                        
+                    </tr>
+                    
+                    {% endfor %}
+                    
+            </tbody>
+        </table>
 
+        <span>Resultados</span>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                <th scope="col"></th>
+                <th scope="col">Atual</th>
+                <th scope="col">Recomendação</th>
+                <th scope="col">Situação</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+                    
+                    <tr>
+                        <th scope="row">IMC</th>
+                        <td>{{dado.get_imc}}</td>
+                        <td>18.50 - 25.00</td>
+                        <td>{{dado.imc_situacao}}</td>
+                    </tr>
+
+                    <tr>
+                        <th scope="row">Peso Ideal</th>
+                        <td>{{dado.get_peso_ideal}}</td>
+                        <td> - </td>
+                        <td> - </td>
+                    </tr>
+
+                    <tr>
+                        <th scope="row">% Massa Gorda</th>
+                        <td>{{dado.get_massa_gorda_percentual}}%</td>
+                        <td> 8,0% - 20,0% </td>
+                        <td>{{dado.get_massa_gorda_situacao_percentual}}</td>
+                    </tr>
+
+                    <tr>
+                        <th scope="row">% Massa Magra</th>
+                        <td>{{dado.get_massa_magra_percentual}}%</td>
+                        <td> 80,0% - 92,0% </td>
+                        <td>{{dado.get_massa_magra_situacao_percentual}}</td>
+                    </tr>
+                    
+                    <tr>
+                        <th scope="row">Massa Gorda</th>
+                        <td>{{dado.get_massa_gorda}} Kg</td>
+                        <td>{{dado.get_massa_gorda_inicial}}kg - {{dado.get_massa_gorda_final}}kg</td>
+                        <td>{{dado.get_massa_gorda_status}}</td>
+                    </tr>
+
+                    <tr>
+                        <th scope="row">Massa Magra</th>
+                        <td>{{dado.get_massa_magra}} Kg</td>
+                        <td>{{dado.get_massa_magra_inicial}}kg - {{dado.get_massa_magra_final}}kg</td>
+                        <td>{{dado.get_massa_magra_status}}</td>
+                    </tr>
+
+                    <tr>
+                        <th scope="row">Soma de Dobras</th>
+                        <td>{{dado.get_soma_dobras}} mm</td>
+                        <td> - </td>
+                        <td> - </td>
+                    </tr>
+
+                    <tr>
+                        <th scope="row">Razão Cintura / Quadril</th>
+                        <td>{{dado.get_razao_cintura_quadril}}</td>
+                        <td> - </td>
+                        <td>Risco {{dado.get_razao_cintura_quadril_status}}</td>
+                    </tr>
+
+                    <tr>
+                        <th scope="row">Área Muscular do Braço (AMB)</th>
+                        <td>{{dado.get_amb}}</td>
+                        <td> - </td>
+                        <td>-</td>
+                    </tr>
+
+                    <tr>
+                        <th scope="row">Área de Gordura do Braço (AGB)</th>
+                        <td>{{dado.get_agb}}</td>
+                        <td> - </td>
+                        <td>-</td>
+                    </tr>
+
+                    <tr>
+                        <th scope="row">Circunferência Muscular do Braço (CMB)</th>
+                        <td>{{dado.get_cmb}}</td>
+                        <td> - </td>
+                        <td>-</td>
+                    </tr>
+
+                   
+                    
+                    
+            </tbody>
+        </table>
+        <br><br>
+    {% endfor %}
 
     <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -70,7 +179,7 @@
                             <div class='col-md'>
                                 <label for="validationServerUsername">Peso</label>
                                 <div class="input-group">
-                                    <input type="number" class="form-control" placeholder="--" name="peso" required>
+                                    <input type="number" step=0.01 class="form-control" placeholder="--" name="peso" required>
                                     <div class="input-group-prepend">
                                         <span class="input-group-text" id="inputGroupPrepend3">Kg</span>
                                     </div>
@@ -95,7 +204,7 @@
                             <div class='col-md'>
                                 <label for="validationServerUsername">Bíceps</label>
                                 <div class="input-group">
-                                    <input type="number" class="form-control" placeholder="--" name="biceps" required>
+                                    <input type="number" step=0.01 class="form-control" placeholder="--" name="biceps" required>
                                     <div class="input-group-prepend">
                                         <span class="input-group-text" id="inputGroupPrepend3">mm</span>
                                     </div>
@@ -105,7 +214,7 @@
                             <div class='col-md'>
                                 <label for="validationServerUsername">Tríceps</label>
                                 <div class="input-group">
-                                    <input type="number" class="form-control" placeholder="--" name="triceps" required>
+                                    <input type="number" step=0.01 class="form-control" placeholder="--" name="triceps" required>
                                     <div class="input-group-prepend">
                                         <span class="input-group-text" id="inputGroupPrepend3">mm</span>
                                     </div>
@@ -118,7 +227,7 @@
                             <div class='col-md'>
                                 <label for="validationServerUsername">Axilar Média</label>
                                 <div class="input-group">
-                                    <input type="number" class="form-control" placeholder="--" name="axilar_media" required>
+                                    <input type="number" step=0.01 class="form-control" placeholder="--" name="axilar_media" required>
                                     <div class="input-group-prepend">
                                         <span class="input-group-text" id="inputGroupPrepend3">mm</span>
                                     </div>
@@ -132,7 +241,7 @@
                             <div class='col-md'>
                                 <label for="validationServerUsername">Tórax</label>
                                 <div class="input-group">
-                                    <input type="number" class="form-control" placeholder="--" name="torax" required>
+                                    <input type="number" step=0.01 class="form-control" placeholder="--" name="torax" required>
                                     <div class="input-group-prepend">
                                         <span class="input-group-text" id="inputGroupPrepend3">mm</span>
                                     </div>
@@ -142,7 +251,7 @@
                             <div class='col-md'>
                                 <label for="validationServerUsername">Abdominal</label>
                                 <div class="input-group">
-                                    <input type="number" class="form-control" placeholder="--" name="abdominal" required>
+                                    <input type="number" step=0.01 class="form-control" placeholder="--" name="abdominal" required>
                                     <div class="input-group-prepend">
                                         <span class="input-group-text" id="inputGroupPrepend3">mm</span>
                                     </div>
@@ -157,7 +266,7 @@
                             <div class='col-md'>
                                 <label for="validationServerUsername">Suprailíaca</label>
                                 <div class="input-group">
-                                    <input type="number" class="form-control" placeholder="--" name="suprailiaca" required>
+                                    <input type="number" step=0.01 class="form-control" placeholder="--" name="suprailiaca" required>
                                     <div class="input-group-prepend">
                                         <span class="input-group-text" id="inputGroupPrepend3">mm</span>
                                     </div>
@@ -167,7 +276,7 @@
                             <div class='col-md'>
                                 <label for="validationServerUsername">Subescapular</label>
                                 <div class="input-group">
-                                    <input type="number" class="form-control" placeholder="--" name="subescapular" required>
+                                    <input type="number" step=0.01 class="form-control" placeholder="--" name="subescapular" required>
                                     <div class="input-group-prepend">
                                         <span class="input-group-text" id="inputGroupPrepend3">mm</span>
                                     </div>
@@ -182,7 +291,7 @@
                             <div class='col-md'>
                                 <label for="validationServerUsername">Coxa</label>
                                 <div class="input-group">
-                                    <input type="number" class="form-control" placeholder="--" name="coxa" required>
+                                    <input type="number" step=0.01 class="form-control" placeholder="--" name="coxa" required>
                                     <div class="input-group-prepend">
                                         <span class="input-group-text" id="inputGroupPrepend3">mm</span>
                                     </div>
@@ -192,7 +301,7 @@
                             <div class='col-md'>
                                 <label for="validationServerUsername">Panturrilha Medial</label>
                                 <div class="input-group">
-                                    <input type="number" class="form-control" placeholder="--" name="panturrilha" required>
+                                    <input type="number" step=0.01 class="form-control" placeholder="--" name="panturrilha" required>
                                     <div class="input-group-prepend">
                                         <span class="input-group-text" id="inputGroupPrepend3">mm</span>
                                     </div>
@@ -211,7 +320,7 @@
                             <div class='col-md'>
                                 <label for="validationServerUsername">Peitoral</label>
                                 <div class="input-group">
-                                    <input type="number" class="form-control" placeholder="--" name="peitoral" required>
+                                    <input type="number" step=0.01 class="form-control" placeholder="--" name="peitoral" required>
                                     <div class="input-group-prepend">
                                         <span class="input-group-text" id="inputGroupPrepend3">cm</span>
                                     </div>
@@ -221,7 +330,7 @@
                             <div class='col-md'>
                                     <label for="validationServerUsername">Abdômen</label>
                                     <div class="input-group">
-                                        <input type="number" class="form-control" placeholder="--" name="abdomen" required>
+                                        <input type="number" step=0.01 class="form-control" placeholder="--" name="abdomen" required>
                                         <div class="input-group-prepend">
                                             <span class="input-group-text" id="inputGroupPrepend3">cm</span>
                                         </div>
@@ -235,7 +344,7 @@
                             <div class='col-md'>
                                 <label for="validationServerUsername">Cintura</label>
                                 <div class="input-group">
-                                    <input type="number" class="form-control" placeholder="--" name="cintura" required>
+                                    <input type="number" step=0.01 class="form-control" placeholder="--" name="cintura" required>
                                     <div class="input-group-prepend">
                                         <span class="input-group-text" id="inputGroupPrepend3">cm</span>
                                     </div>
@@ -245,7 +354,7 @@
                             <div class='col-md'>
                                 <label for="validationServerUsername">Quadril</label>
                                 <div class="input-group">
-                                    <input type="number" class="form-control" placeholder="--" name="quadril" required>
+                                    <input type="number" step=0.01 class="form-control" placeholder="--" name="quadril" required>
                                     <div class="input-group-prepend">
                                         <span class="input-group-text" id="inputGroupPrepend3">cm</span>
                                     </div>
@@ -258,7 +367,7 @@
                             <div class='col-md'>
                                 <label for="validationServerUsername">Pescoço</label>
                                 <div class="input-group">
-                                    <input type="number" class="form-control" placeholder="--" name="pescoco" required>
+                                    <input type="number" step=0.01 class="form-control" placeholder="--" name="pescoco" required>
                                     <div class="input-group-prepend">
                                         <span class="input-group-text" id="inputGroupPrepend3">cm</span>
                                     </div>
@@ -273,7 +382,7 @@
                             <div class='col-md'>
                                 <label for="validationServerUsername">Coxa Esquerda</label>
                                 <div class="input-group">
-                                    <input type="number" class="form-control" placeholder="--" name="coxa_e" required>
+                                    <input type="number" step=0.01 class="form-control" placeholder="--" name="coxa_e" required>
                                     <div class="input-group-prepend">
                                         <span class="input-group-text" id="inputGroupPrepend3">cm</span>
                                     </div>
@@ -283,7 +392,7 @@
                             <div class='col-md'>
                                 <label for="validationServerUsername">Coxa Direita</label>
                                 <div class="input-group">
-                                    <input type="number" class="form-control" placeholder="--" name="coxa_d" required>
+                                    <input type="number" step=0.01 class="form-control" placeholder="--" name="coxa_d" required>
                                     <div class="input-group-prepend">
                                         <span class="input-group-text" id="inputGroupPrepend3">cm</span>
                                     </div>
@@ -298,7 +407,7 @@
                             <div class='col-md'>
                                 <label for="validationServerUsername">Panturrilha Esquerda</label>
                                 <div class="input-group">
-                                    <input type="number" class="form-control" placeholder="--" name="panturrilha_e" required>
+                                    <input type="number" step=0.01 class="form-control" placeholder="--" name="panturrilha_e" required>
                                     <div class="input-group-prepend">
                                         <span class="input-group-text" id="inputGroupPrepend3">cm</span>
                                     </div>
@@ -308,7 +417,7 @@
                             <div class='col-md'>
                                 <label for="validationServerUsername">Panturrilha Direita</label>
                                 <div class="input-group">
-                                    <input type="number" class="form-control" placeholder="--" name="panturrilha_d" required>
+                                    <input type="number" step=0.01 class="form-control" placeholder="--" name="panturrilha_d" required>
                                     <div class="input-group-prepend">
                                         <span class="input-group-text" id="inputGroupPrepend3">cm</span>
                                     </div>
@@ -324,7 +433,7 @@
                             <div class='col-md'>
                                 <label for="validationServerUsername">Punho Esquerdo</label>
                                 <div class="input-group">
-                                    <input type="number" class="form-control" placeholder="--" name="punho_e" required>
+                                    <input type="number" step=0.01 class="form-control" placeholder="--" name="punho_e" required>
                                     <div class="input-group-prepend">
                                         <span class="input-group-text" id="inputGroupPrepend3">cm</span>
                                     </div>
@@ -334,7 +443,7 @@
                             <div class='col-md'>
                                 <label for="validationServerUsername">Punho Direito</label>
                                 <div class="input-group">
-                                    <input type="number" class="form-control" placeholder="--" name="punho_d" required>
+                                    <input type="number" step=0.01 class="form-control" placeholder="--" name="punho_d" required>
                                     <div class="input-group-prepend">
                                         <span class="input-group-text" id="inputGroupPrepend3">cm</span>
                                     </div>
@@ -349,7 +458,7 @@
                             <div class='col-md'>
                                 <label for="validationServerUsername">Braço Esquerdo</label>
                                 <div class="input-group">
-                                    <input type="number" class="form-control" placeholder="--" name="braco_e" required>
+                                    <input type="number" step=0.01 class="form-control" placeholder="--" name="braco_e" required>
                                     <div class="input-group-prepend">
                                         <span class="input-group-text" id="inputGroupPrepend3">cm</span>
                                     </div>
@@ -359,7 +468,7 @@
                             <div class='col-md'>
                                 <label for="validationServerUsername">Braço Direito</label>
                                 <div class="input-group">
-                                    <input type="number" class="form-control" placeholder="--" name="braco_d" required>
+                                    <input type="number" step=0.01 class="form-control" placeholder="--" name="braco_d" required>
                                     <div class="input-group-prepend">
                                         <span class="input-group-text" id="inputGroupPrepend3">cm</span>
                                     </div>
@@ -374,7 +483,7 @@
                             <div class='col-md'>
                                 <label for="validationServerUsername">Antebraço Esquerdo</label>
                                 <div class="input-group">
-                                    <input type="number" class="form-control" placeholder="--" name="antebraco_e" required>
+                                    <input type="number" step=0.01 class="form-control" placeholder="--" name="antebraco_e" required>
                                     <div class="input-group-prepend">
                                         <span class="input-group-text" id="inputGroupPrepend3">cm</span>
                                     </div>
@@ -384,7 +493,7 @@
                             <div class='col-md'>
                                 <label for="validationServerUsername">Antebraço Direito</label>
                                 <div class="input-group">
-                                    <input type="number" class="form-control" placeholder="--" name="antebraco_d" required>
+                                    <input type="number" step=0.01 class="form-control" placeholder="--" name="antebraco_d" required>
                                     <div class="input-group-prepend">
                                         <span class="input-group-text" id="inputGroupPrepend3">cm</span>
                                     </div>

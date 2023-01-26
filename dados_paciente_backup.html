@@ -26,26 +26,33 @@
     </div>
     <hr>
     <button type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#modal">
-        Adicionar dados do paciente
+        Adicionar dados
     </button>
+    
     <br>
     <br>
     <table class="table table-striped">
         <thead>
             <tr>
-            <th scope="col">Peso</th>
-            <th scope="col">Altura</th>
-            <th scope="col">% gordura</th>
-            <th scope="col">% músculo</th>
+            <th scope="col"></th>
+            <th scope="col">Atual</th>
+            <th scope="col">Recomendação</th>
+            <th scope="col">Situação</th>
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <th scope="row">58 Kg</th>
-                <td>173 cm</td>
-                <td>19%</td>
-                <td>25%</td>
-            </tr>
+            
+                {% for dado in dados_paciente %}
+                <tr>
+                    <th scope="row">IMC</th>
+                    <td>{{dado.imc}}</td>
+                    <td>18.50 - 25.00</td>
+                    <td>{{dado.imc_situacao}}</td>
+                    
+                </tr>
+                
+                {% endfor %}
+                
         </tbody>
     </table>
 
@@ -61,12 +68,12 @@
 
                 <div class="modal-body">
                     <form action="{% url 'dados_paciente' paciente.id %}" method="POST">{% csrf_token %}
-                        <h4 class="titulo">Dados do paciente</h4>
+                        <h4 class="titulo">Medidas do paciente</h4>
                         <div class="form-row">
                             <div class='col-md'>
                                 <label for="validationServerUsername">Peso</label>
                                 <div class="input-group">
-                                    <input type="number" class="form-control" placeholder="--" name="peso">
+                                    <input type="number" class="form-control" placeholder="--" name="peso" required>
                                     <div class="input-group-prepend">
                                         <span class="input-group-text" id="inputGroupPrepend3">Kg</span>
                                     </div>
@@ -76,7 +83,7 @@
                             <div class='col-md'>
                                     <label for="validationServerUsername">Altura</label>
                                     <div class="input-group">
-                                        <input type="number" class="form-control" placeholder="--" name="altura">
+                                        <input type="number" class="form-control" placeholder="--" name="altura" required>
                                         <div class="input-group-prepend">
                                             <span class="input-group-text" id="inputGroupPrepend3">cm</span>
                                         </div>
@@ -85,71 +92,304 @@
 
                         </div>
                         <br>
-
+                        <br>
+                        <h4 class="titulo">Dobras cultâneas</h4>
                         <div class="form-row">
                             <div class='col-md'>
-                                <label for="validationServerUsername">Percentual de gordura</label>
+                                <label for="validationServerUsername">Bíceps</label>
                                 <div class="input-group">
-                                    <input type="number" class="form-control" placeholder="--" name="gordura">
+                                    <input type="number" class="form-control" placeholder="--" name="biceps" required>
                                     <div class="input-group-prepend">
-                                        <span class="input-group-text" id="inputGroupPrepend3">%</span>
+                                        <span class="input-group-text" id="inputGroupPrepend3">mm</span>
                                     </div>
                                 </div>
                             </div>
 
                             <div class='col-md'>
-                                <label for="validationServerUsername">Percentual de músculo</label>
+                                <label for="validationServerUsername">Tríceps</label>
                                 <div class="input-group">
-                                    <input type="number" class="form-control" placeholder="--" name="musculo">
+                                    <input type="number" class="form-control" placeholder="--" name="triceps" required>
                                     <div class="input-group-prepend">
-                                        <span class="input-group-text" id="inputGroupPrepend3">%</span>
+                                        <span class="input-group-text" id="inputGroupPrepend3">mm</span>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
                         <br>
-                        <h4 class="titulo">Dados laboratoriais</h4>
                         <div class="form-row">
                             <div class='col-md'>
-                                <label for="validationServerUsername">Colesterol HDL</label>
+                                <label for="validationServerUsername">Axilar Média</label>
                                 <div class="input-group">
-                                    <input type="number" class="form-control" placeholder="--" name="hdl">
+                                    <input type="number" class="form-control" placeholder="--" name="axilar_media" required>
                                     <div class="input-group-prepend">
-                                        <span class="input-group-text" id="inputGroupPrepend3">mg/dL</span>
+                                        <span class="input-group-text" id="inputGroupPrepend3">mm</span>
                                     </div>
                                 </div>
                             </div>
 
-                            <div class='col-md'>
-                                <label for="validationServerUsername">Colesterol LDL</label>
-                                <div class="input-group">
-                                    <input type="number" class="form-control" placeholder="--" name="ldl">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text" id="inputGroupPrepend3">mg/dL</span>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                         <br>
 
                         <div class="form-row">
                             <div class='col-md'>
-                                <label for="validationServerUsername">Colesterol total</label>
+                                <label for="validationServerUsername">Tórax</label>
                                 <div class="input-group">
-                                    <input type="number" class="form-control" placeholder="--" name="ctotal">
+                                    <input type="number" class="form-control" placeholder="--" name="torax" required>
                                     <div class="input-group-prepend">
-                                        <span class="input-group-text" id="inputGroupPrepend3">mg/dL</span>
+                                        <span class="input-group-text" id="inputGroupPrepend3">mm</span>
                                     </div>
                                 </div>
                             </div>
 
                             <div class='col-md'>
-                                <label for="validationServerUsername">Triglicerídios</label>
+                                <label for="validationServerUsername">Abdominal</label>
                                 <div class="input-group">
-                                    <input type="number" class="form-control" placeholder="--" name="triglicerídios">
+                                    <input type="number" class="form-control" placeholder="--" name="abdominal" required>
                                     <div class="input-group-prepend">
-                                        <span class="input-group-text" id="inputGroupPrepend3">mg/dL</span>
+                                        <span class="input-group-text" id="inputGroupPrepend3">mm</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <br>
+
+                        <div class="form-row">
+                            <div class='col-md'>
+                                <label for="validationServerUsername">Suprailíaca</label>
+                                <div class="input-group">
+                                    <input type="number" class="form-control" placeholder="--" name="suprailiaca" required>
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="inputGroupPrepend3">mm</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class='col-md'>
+                                <label for="validationServerUsername">Subescapular</label>
+                                <div class="input-group">
+                                    <input type="number" class="form-control" placeholder="--" name="subescapular" required>
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="inputGroupPrepend3">mm</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <br>
+
+                        <div class="form-row">
+                            <div class='col-md'>
+                                <label for="validationServerUsername">Coxa</label>
+                                <div class="input-group">
+                                    <input type="number" class="form-control" placeholder="--" name="coxa" required>
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="inputGroupPrepend3">mm</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class='col-md'>
+                                <label for="validationServerUsername">Panturrilha Medial</label>
+                                <div class="input-group">
+                                    <input type="number" class="form-control" placeholder="--" name="panturrilha" required>
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="inputGroupPrepend3">mm</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <br>
+                        <br>
+                        <br>
+                        <h3 class="titulo">Dados de Circunferência</h3>
+                        <br>
+                        <h4 class="titulo">Dorso</h4>
+                        <div class="form-row">
+                            <div class='col-md'>
+                                <label for="validationServerUsername">Peitoral</label>
+                                <div class="input-group">
+                                    <input type="number" class="form-control" placeholder="--" name="peitoral" required>
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="inputGroupPrepend3">cm</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class='col-md'>
+                                    <label for="validationServerUsername">Abdômen</label>
+                                    <div class="input-group">
+                                        <input type="number" class="form-control" placeholder="--" name="abdomen" required>
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" id="inputGroupPrepend3">cm</span>
+                                        </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <br>
+                        
+                        <div class="form-row">
+                            <div class='col-md'>
+                                <label for="validationServerUsername">Cintura</label>
+                                <div class="input-group">
+                                    <input type="number" class="form-control" placeholder="--" name="cintura" required>
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="inputGroupPrepend3">cm</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class='col-md'>
+                                <label for="validationServerUsername">Quadril</label>
+                                <div class="input-group">
+                                    <input type="number" class="form-control" placeholder="--" name="quadril" required>
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="inputGroupPrepend3">cm</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <br>
+                        <div class="form-row">
+                            <div class='col-md'>
+                                <label for="validationServerUsername">Pescoço</label>
+                                <div class="input-group">
+                                    <input type="number" class="form-control" placeholder="--" name="pescoco" required>
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="inputGroupPrepend3">cm</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <br>
+                        <br>
+                        <h4 class="titulo">Membros Inferiores</h4>
+                        <div class="form-row">
+                            <div class='col-md'>
+                                <label for="validationServerUsername">Coxa Esquerda</label>
+                                <div class="input-group">
+                                    <input type="number" class="form-control" placeholder="--" name="coxa_e" required>
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="inputGroupPrepend3">cm</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class='col-md'>
+                                <label for="validationServerUsername">Coxa Direita</label>
+                                <div class="input-group">
+                                    <input type="number" class="form-control" placeholder="--" name="coxa_d" required>
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="inputGroupPrepend3">cm</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <br>
+
+                        <div class="form-row">
+                            <div class='col-md'>
+                                <label for="validationServerUsername">Panturrilha Esquerda</label>
+                                <div class="input-group">
+                                    <input type="number" class="form-control" placeholder="--" name="panturrilha_e" required>
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="inputGroupPrepend3">cm</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class='col-md'>
+                                <label for="validationServerUsername">Panturrilha Direita</label>
+                                <div class="input-group">
+                                    <input type="number" class="form-control" placeholder="--" name="panturrilha_d" required>
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="inputGroupPrepend3">cm</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <br>
+                        <br>
+                        <h4 class="titulo">Membros Superiores</h4>
+                        <div class="form-row">
+                            <div class='col-md'>
+                                <label for="validationServerUsername">Punho Esquerdo</label>
+                                <div class="input-group">
+                                    <input type="number" class="form-control" placeholder="--" name="punho_e" required>
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="inputGroupPrepend3">cm</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class='col-md'>
+                                <label for="validationServerUsername">Punho Direito</label>
+                                <div class="input-group">
+                                    <input type="number" class="form-control" placeholder="--" name="punho_d" required>
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="inputGroupPrepend3">cm</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <br>
+
+                        <div class="form-row">
+                            <div class='col-md'>
+                                <label for="validationServerUsername">Braço Esquerdo</label>
+                                <div class="input-group">
+                                    <input type="number" class="form-control" placeholder="--" name="braco_e" required>
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="inputGroupPrepend3">cm</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class='col-md'>
+                                <label for="validationServerUsername">Braço Direito</label>
+                                <div class="input-group">
+                                    <input type="number" class="form-control" placeholder="--" name="braco_d" required>
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="inputGroupPrepend3">cm</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <br>
+
+                        <div class="form-row">
+                            <div class='col-md'>
+                                <label for="validationServerUsername">Antebraço Esquerdo</label>
+                                <div class="input-group">
+                                    <input type="number" class="form-control" placeholder="--" name="antebraco_e" required>
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="inputGroupPrepend3">cm</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class='col-md'>
+                                <label for="validationServerUsername">Antebraço Direito</label>
+                                <div class="input-group">
+                                    <input type="number" class="form-control" placeholder="--" name="antebraco_d" required>
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="inputGroupPrepend3">cm</span>
                                     </div>
                                 </div>
                             </div>
@@ -164,7 +404,6 @@
             </div>
         </div>
     </div>
-
 
 
 {% endblock%}

@@ -50,9 +50,6 @@ class DadosPaciente(models.Model):
     def get_imc(self):
         return round(float(self.peso) / float((self.altura**2)/10000), 2)
 
-    def get_imc_novo(self, altura, peso):
-        return round(float(peso) / float((altura**2)/10000), 2)
-
     def imc_situacao(self):
         retorno = self.get_imc()
         if retorno < 18.5:

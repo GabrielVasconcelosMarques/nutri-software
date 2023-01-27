@@ -29,10 +29,10 @@ def paciente(request):
             messages.add_message(request, constants.ERROR, 'Digite uma idade válida')
             return redirect('/paciente/')
 
-        pacientes = Pacientes.objects.filter(email=email, nutri=usuario)
+        pacientes = Pacientes.objects.filter(email=email)
 
         if pacientes.exists():
-            messages.add_message(request, constants.ERROR, f'Já existe um paciente com o e-mail {email} para o nutricionista {request.user.username}')
+            messages.add_message(request, constants.ERROR, f'Já existe um paciente com o e-mail {email}.')
             return redirect('/paciente/')
         
         try:
@@ -53,11 +53,28 @@ def paciente(request):
 
 
 @login_required(login_url='/auth/login/')
+def consultar_paciente(request):
+    if request.method == 'GET':
+
+        # criando retorno de busca
+        txt_buscar_nome = request.GET.get('nome_buscar')
+
+        # fazendo if e else porque ele da erro caso o txt_buscar_nome seja None, então dessa forma fica como string vazia
+        if txt_buscar_nome:
+            pass
+        else:
+            txt_buscar_nome = ""
+        pacientes = Pacientes.objects.filter(nome__icontains=txt_buscar_nome, nutri=request.user)
+        return render(request, 'consultar_paciente.html', {'pacientes' : pacientes})
+
+@login_required(login_url='/auth/login/')
 def dados_paciente(request, id):
     if request.method == 'GET':
         paciente = get_object_or_404(Pacientes, id=id, nutri=request.user)
         dados_paciente = DadosPaciente.objects.filter(paciente=paciente)
-        return render(request, 'dados_paciente.html', {'paciente' : paciente, 'dados_paciente' : dados_paciente})
+        ultimo_dado_paciente = DadosPaciente.objects.filter(paciente=paciente).last()
+        
+        return render(request, 'dados_paciente.html', {'paciente' : paciente, 'dados_paciente' : dados_paciente, 'ultimo_dado_paciente' : ultimo_dado_paciente})
     elif request.method == "POST":
         peso = request.POST.get('peso').replace(',', '.')
         altura = request.POST.get('altura').replace(',', '.')
@@ -92,7 +109,7 @@ def dados_paciente(request, id):
 
         if not peso.replace('.', '').isnumeric() or not altura.replace('.', '').isnumeric() or not biceps.replace('.', '').isnumeric() or not triceps.replace('.', '').isnumeric() or not axilar_media.replace('.', '').isnumeric() or not torax.replace('.', '').isnumeric() or not abdominal.replace('.', '').isnumeric() or not suprailiaca.replace('.', '').isnumeric() or not subescapular.replace('.', '').isnumeric() or not coxa.replace('.', '').isnumeric() or not panturrilha.replace('.', '').isnumeric() or not peitoral.replace('.', '').isnumeric() or not abdomen.replace('.', '').isnumeric() or not cintura.replace('.', '').isnumeric() or not quadril.replace('.', '').isnumeric() or not pescoco.replace('.', '').isnumeric() or not coxa_e.replace('.', '').isnumeric() or not coxa_d.replace('.', '').isnumeric() or not panturrilha_e.replace('.', '').isnumeric() or not panturrilha_d.replace('.', '').isnumeric() or not punho_e.replace('.', '').isnumeric() or not punho_d.replace('.', '').isnumeric() or not braco_e.replace('.', '').isnumeric() or not braco_d.replace('.', '').isnumeric() or not antebraco_e.replace('.', '').isnumeric() or not antebraco_d.replace('.', '').isnumeric():
             messages.add_message(request, constants.ERROR, 'Digite um valor numérico para os campos de medidas')
-            return redirect('/paciente/')
+            return redirect('/consultar_paciente/')
 
         try:
             paciente = get_object_or_404(Pacientes, id=id, nutri=request.user)
@@ -127,10 +144,10 @@ def dados_paciente(request, id):
 
             dados_paciente.save()
             messages.add_message(request, constants.SUCCESS, 'Dados cadastrados com sucesso')
-            return redirect('/paciente/')
+            return redirect('/consultar_paciente/')
         except:
             messages.add_message(request, constants.ERROR, 'Erro interno do sistema')
-            return redirect('/paciente/')
+            return redirect('/consultar_paciente/')
 
 
 

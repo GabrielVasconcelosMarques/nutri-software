@@ -32,7 +32,7 @@
     <br>
     <br>
     
-    {% for dado in dados_paciente %}
+    {% if ultimo_dado_paciente %}
         <span>Circunferências</span>
         <table class="table table-striped">
             <thead>
@@ -48,124 +48,128 @@
             </thead>
             <tbody>
                 
-                    {% for dado in dados_paciente %}
-                    <tr>
-                        <th scope="row">{{dado.peso}}</th>
-                        <td>{{dado.altura}}</td>
-                        <td>{{dado.peitoral}}</td>
-                        <td>{{dado.abdomen}}</td>
-                        <td>{{dado.cintura}}</td>
-                        <td>{{dado.quadril}}</td>
-                        
-                        
-                    </tr>
                     
-                    {% endfor %}
-                    
-            </tbody>
-        </table>
-
-        <span>Resultados</span>
-        <table class="table table-striped">
-            <thead>
                 <tr>
-                <th scope="col"></th>
-                <th scope="col">Atual</th>
-                <th scope="col">Recomendação</th>
-                <th scope="col">Situação</th>
-                </tr>
-            </thead>
-            <tbody>
+                    <th scope="row">{{ultimo_dado_paciente.peso}}</th>
+                    <td>{{ultimo_dado_paciente.altura}}</td>
+                    <td>{{ultimo_dado_paciente.peitoral}}</td>
+                    <td>{{ultimo_dado_paciente.abdomen}}</td>
+                    <td>{{ultimo_dado_paciente.cintura}}</td>
+                    <td>{{ultimo_dado_paciente.quadril}}</td>
+                    
                 
+                </tr>
                     
-                    <tr>
-                        <th scope="row">IMC</th>
-                        <td>{{dado.get_imc}}</td>
-                        <td>18.50 - 25.00</td>
-                        <td>{{dado.imc_situacao}}</td>
-                    </tr>
-
-                    <tr>
-                        <th scope="row">Peso Ideal</th>
-                        <td>{{dado.get_peso_ideal}}</td>
-                        <td> - </td>
-                        <td> - </td>
-                    </tr>
-
-                    <tr>
-                        <th scope="row">% Massa Gorda</th>
-                        <td>{{dado.get_massa_gorda_percentual}}%</td>
-                        <td> 8,0% - 20,0% </td>
-                        <td>{{dado.get_massa_gorda_situacao_percentual}}</td>
-                    </tr>
-
-                    <tr>
-                        <th scope="row">% Massa Magra</th>
-                        <td>{{dado.get_massa_magra_percentual}}%</td>
-                        <td> 80,0% - 92,0% </td>
-                        <td>{{dado.get_massa_magra_situacao_percentual}}</td>
-                    </tr>
-                    
-                    <tr>
-                        <th scope="row">Massa Gorda</th>
-                        <td>{{dado.get_massa_gorda}} Kg</td>
-                        <td>{{dado.get_massa_gorda_inicial}}kg - {{dado.get_massa_gorda_final}}kg</td>
-                        <td>{{dado.get_massa_gorda_status}}</td>
-                    </tr>
-
-                    <tr>
-                        <th scope="row">Massa Magra</th>
-                        <td>{{dado.get_massa_magra}} Kg</td>
-                        <td>{{dado.get_massa_magra_inicial}}kg - {{dado.get_massa_magra_final}}kg</td>
-                        <td>{{dado.get_massa_magra_status}}</td>
-                    </tr>
-
-                    <tr>
-                        <th scope="row">Soma de Dobras</th>
-                        <td>{{dado.get_soma_dobras}} mm</td>
-                        <td> - </td>
-                        <td> - </td>
-                    </tr>
-
-                    <tr>
-                        <th scope="row">Razão Cintura / Quadril</th>
-                        <td>{{dado.get_razao_cintura_quadril}}</td>
-                        <td> - </td>
-                        <td>Risco {{dado.get_razao_cintura_quadril_status}}</td>
-                    </tr>
-
-                    <tr>
-                        <th scope="row">Área Muscular do Braço (AMB)</th>
-                        <td>{{dado.get_amb}}</td>
-                        <td> - </td>
-                        <td>-</td>
-                    </tr>
-
-                    <tr>
-                        <th scope="row">Área de Gordura do Braço (AGB)</th>
-                        <td>{{dado.get_agb}}</td>
-                        <td> - </td>
-                        <td>-</td>
-                    </tr>
-
-                    <tr>
-                        <th scope="row">Circunferência Muscular do Braço (CMB)</th>
-                        <td>{{dado.get_cmb}}</td>
-                        <td> - </td>
-                        <td>-</td>
-                    </tr>
-
-                   
                     
                     
             </tbody>
         </table>
-        <br><br>
-    {% endfor %}
 
-    <div style="width: 60%;">
-        <canvas id="myChart"></canvas>
-    </div>
+        
+            <span>Resultados</span>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                    <th scope="col"></th>
+                    <th scope="col">Atual</th>
+                    <th scope="col">Recomendação</th>
+                    <th scope="col">Situação</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                        
+                        <tr>
+                            <th scope="row">IMC</th>
+                            <td>{{ultimo_dado_paciente.get_imc}}</td>
+                            <td>18.50 - 25.00</td>
+                            <td>{{ultimo_dado_paciente.imc_situacao}}</td>
+                        </tr>
+
+                        <tr>
+                            <th scope="row">Peso Ideal</th>
+                            <td>{{ultimo_dado_paciente.get_peso_ideal}}</td>
+                            <td> - </td>
+                            <td> - </td>
+                        </tr>
+
+                        <tr>
+                            <th scope="row">% Massa Gorda</th>
+                            <td>{{ultimo_dado_paciente.get_massa_gorda_percentual}}%</td>
+                            <td> 8,0% - 20,0% </td>
+                            <td>{{ultimo_dado_paciente.get_massa_gorda_situacao_percentual}}</td>
+                        </tr>
+
+                        <tr>
+                            <th scope="row">% Massa Magra</th>
+                            <td>{{ultimo_dado_paciente.get_massa_magra_percentual}}%</td>
+                            <td> 80,0% - 92,0% </td>
+                            <td>{{ultimo_dado_paciente.get_massa_magra_situacao_percentual}}</td>
+                        </tr>
+                        
+                        <tr>
+                            <th scope="row">Massa Gorda</th>
+                            <td>{{ultimo_dado_paciente.get_massa_gorda}} Kg</td>
+                            <td>{{ultimo_dado_paciente.get_massa_gorda_inicial}}kg - {{ultimo_dado_paciente.get_massa_gorda_final}}kg</td>
+                            <td>{{ultimo_dado_paciente.get_massa_gorda_status}}</td>
+                        </tr>
+
+                        <tr>
+                            <th scope="row">Massa Magra</th>
+                            <td>{{ultimo_dado_paciente.get_massa_magra}} Kg</td>
+                            <td>{{ultimo_dado_paciente.get_massa_magra_inicial}}kg - {{ultimo_dado_paciente.get_massa_magra_final}}kg</td>
+                            <td>{{ultimo_dado_paciente.get_massa_magra_status}}</td>
+                        </tr>
+
+                        <tr>
+                            <th scope="row">Soma de Dobras</th>
+                            <td>{{ultimo_dado_paciente.get_soma_dobras}} mm</td>
+                            <td> - </td>
+                            <td> - </td>
+                        </tr>
+
+                        <tr>
+                            <th scope="row">Razão Cintura / Quadril</th>
+                            <td>{{ultimo_dado_paciente.get_razao_cintura_quadril}}</td>
+                            <td> - </td>
+                            <td>Risco {{ultimo_dado_paciente.get_razao_cintura_quadril_status}}</td>
+                        </tr>
+
+                        <tr>
+                            <th scope="row">Área Muscular do Braço (AMB)</th>
+                            <td>{{ultimo_dado_paciente.get_amb}}</td>
+                            <td> - </td>
+                            <td>-</td>
+                        </tr>
+
+                        <tr>
+                            <th scope="row">Área de Gordura do Braço (AGB)</th>
+                            <td>{{ultimo_dado_paciente.get_agb}}</td>
+                            <td> - </td>
+                            <td>-</td>
+                        </tr>
+
+                        <tr>
+                            <th scope="row">Circunferência Muscular do Braço (CMB)</th>
+                            <td>{{ultimo_dado_paciente.get_cmb}}</td>
+                            <td> - </td>
+                            <td>-</td>
+                        </tr>
+
+                        
+                        
+                        
+                </tbody>
+            </table>
+            <br><br>
+            
+
+            <div style="width: 60%;">
+                <canvas id="myChart"></canvas>
+            </div>
+    {% else %}
+        
+    {% endif %}
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <script>

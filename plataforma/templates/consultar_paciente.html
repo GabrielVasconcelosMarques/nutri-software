@@ -1,0 +1,45 @@
+{% extends 'base_plataforma.html' %}
+
+{% load static %}
+
+{% block 'plataforma' %}
+    <br>
+    {% if messages %}
+        <br>
+            {% for message in messages %}
+                <div class="alert {{message.tags}}">
+                    <span>{{message}}</span>
+                </div>
+            {% endfor %}
+    {% endif %}
+
+        <form action="?" method="GET">
+            <input type="text" name="nome_buscar" id="" value="" class="form-control" style="margin-bottom: 2%;" placeholder="Informe o nome do paciente ou parte do nome...">
+            <button type="submit" class="btn btn-success">Buscar</button>
+            <a class="btn btn-info" href="{% url 'consultar_paciente' %}">Limpar</a>
+        </form>
+        <br>
+        <br>
+        <div class="row">
+        {% for paciente in pacientes %}
+            <div class="col-md-4" style="margin-bottom: 5%;">
+                <a href="{% url 'dados_paciente' paciente.id %}" class="link-hover">
+                    <div class="card-paciente">
+                        <div class="foto-perfil">
+                            {% if paciente.sexo == 'M' %}
+                                <img src="{% static 'plataforma/img/male.png' %}">
+                            {% else %}
+                                <img src="{% static 'plataforma/img/female.png' %}">
+                            {% endif %}
+                        </div>
+                        <br>
+                        <p class="dados">{{paciente.nome}}</p>
+                        <p class="dados">{{paciente.idade}} Anos</p>
+                    </div>
+                </a>
+            </div>
+        {% endfor %}
+        </div>
+        
+    
+{% endblock %}

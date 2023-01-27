@@ -19,26 +19,6 @@
     
         <br>
         <br>
-        <div class="row">
-        {% for paciente in pacientes %}
-            <div class="col-md-4" style="margin-bottom: 5%;">
-                <a href="{% url 'dados_paciente' paciente.id %}" class="link-hover">
-                    <div class="card-paciente">
-                        <div class="foto-perfil">
-                            {% if paciente.sexo == 'M' %}
-                                <img src="{% static 'plataforma/img/male.png' %}">
-                            {% else %}
-                                <img src="{% static 'plataforma/img/female.png' %}">
-                            {% endif %}
-                        </div>
-                        <br>
-                        <p class="dados">{{paciente.nome}}</p>
-                        <p class="dados">{{paciente.idade}} Anos</p>
-                    </div>
-                </a>
-            </div>
-        {% endfor %}
-        </div>
         
     
 

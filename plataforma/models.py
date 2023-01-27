@@ -14,6 +14,7 @@ class Pacientes(models.Model):
     def __str__(self):
         return self.nome
 
+
 class DadosPaciente(models.Model):
     paciente = models.ForeignKey(Pacientes, on_delete=models.CASCADE)
     data = models.DateTimeField()

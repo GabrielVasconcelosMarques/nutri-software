@@ -3,7 +3,7 @@ from django.http import HttpResponse, JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.messages import constants
-from .models import Pacientes, DadosPaciente
+from .models import Pacientes, DadosPaciente, Refeicao, Opcao
 from datetime import datetime
 from django.views.decorators.csrf import csrf_exempt
 
@@ -172,7 +172,51 @@ def grafico_imc(request, id):
     data = {'imc': imcs,
     'labels': labels}
     return JsonResponse(data)
-        
-            
+
+
+@login_required(login_url='/auth/logar/')         
+def plano_alimentar_listar(request):
+    if request.method == 'GET':
+        # criando retorno de busca
+        txt_buscar_nome = request.GET.get('nome_buscar')
+
+        # fazendo if e else porque ele da erro caso o txt_buscar_nome seja None, então dessa forma fica como string vazia
+        if txt_buscar_nome:
+            pass
+        else:
+            txt_buscar_nome = ""
+        pacientes = Pacientes.objects.filter(nome__icontains=txt_buscar_nome, nutri=request.user)
+        return render(request, 'plano_alimentar_listar.html', {'pacientes': pacientes})
+
+def plano_alimentar(request, id):
+    if request.method == 'GET':
+        paciente = get_object_or_404(Pacientes, id=id, nutri=request.user)
+        return render(request, 'plano_alimentar.html', {'paciente' : paciente})
+
+
+def refeicao(request, id):
+        paciente = get_object_or_404(Pacientes, id=id, nutri=request.user)
+
+        if request.method == 'POST':
+            titulo = request.POST.get('titulo')
+            horario = request.POST.get('horario')
+            proteinas = request.POST.get('proteinas')
+            carboidratos = request.POST.get('carboidratos')
+            lipideos = request.POST.get('lipideos')
+            calorias = request.POST.get('calorias')
+
+            r1 = Refeicao(paciente=paciente,
+                        titulo=titulo,
+                        horario=horario,
+                        proteinas=proteinas,
+                        carboidratos=carboidratos,
+                        lipideos=lipideos,
+                        calorias=calorias)
+
+            r1.save()
+
+            messages.add_message(request, constants.SUCCESS, 'Refeição cadastrada')
+            return redirect(f'/plano_alimentar/{id}')
+
 
         

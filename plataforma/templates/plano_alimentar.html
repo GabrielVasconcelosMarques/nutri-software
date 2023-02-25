@@ -37,26 +37,35 @@
     <br>
 
     <div class="fundo-alimentar">
-        <div class="refeicao">
-            <div class="head-refeicao">
-                <span>Café da manhã</span>
-                <span style="float: right;">07:00h</span>
-            </div>
+        {% for ref in refeicao %}
+            <div class="refeicao">
+                <div class="head-refeicao">
+                    <span>{{ref.titulo}}</span>
+                    <span style="float: right;">{{ref.horario}}h</span>
+                </div>
 
-            <div class="body-refeicao">
-                <div class="opcao">
-                    <div class="row">
-                        <div class="col-md-2">
-                            <img width="100%" src="{% static 'plataforma/img/male.png' %}">
-                        </div>
+                <div class="body-refeicao">
+                    {% for op in opcao %}
+                        {% if op.refeicao == ref %}
+                            <div class="opcao">
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <img width="100%" src="{{op.imagem.url}}">
+                                    </div>
 
-                        <div class="col-md-10">
-                            Teste 2
-                        </div>
-                    </div>
+                                    <div class="col-md-10">
+                                        {{op.descricao}}
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                        {% endif %}
+                    {% endfor %}
                 </div>
             </div>
-        </div>
+            <br>
+        {% endfor %}
+
     </div>
 
     <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -129,21 +138,24 @@
                                     </div>
                                 </div>
 
-                                
-
+                                <br>
+                                <input type="submit" value="Cadastrar" class="btn btn-success">
+                                </div>
                             </div>
-                        </div>
-                        <br>
-                        <input type="submit" value="Cadastrar" class="btn btn-success">
+                            <br>
+                        
+
                         </form>
                     </div>
 
                     <div id="form-opcao" style="display: none;">
-                        <form action="" method="POST" enctype='multipart/form-data'>{% csrf_token %}
+                        <form action="{% url 'opcao' paciente.id %}" method="POST" enctype='multipart/form-data'>{% csrf_token %}
                             <label for="validationServerUsername">Selecione a refeição</label>
                             <div class="input-group">
                                 <select class="form-control" name="refeicao">
-                                    <option value="">Café da manhã</option>
+                                    {% for ref in refeicao %}
+                                        <option value="{{ref.id}}">{{ref.titulo}}</option>
+                                    {% endfor %}
                                 </select>
                             </div>
 

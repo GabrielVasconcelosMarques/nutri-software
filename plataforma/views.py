@@ -191,7 +191,9 @@ def plano_alimentar_listar(request):
 def plano_alimentar(request, id):
     if request.method == 'GET':
         paciente = get_object_or_404(Pacientes, id=id, nutri=request.user)
-        return render(request, 'plano_alimentar.html', {'paciente' : paciente})
+        r1 = Refeicao.objects.filter(paciente=paciente).order_by("horario")
+        o1 = Opcao.objects.all()
+        return render(request, 'plano_alimentar.html', {'paciente' : paciente, 'refeicao' : r1, 'opcao' : o1})
 
 
 def refeicao(request, id):
@@ -217,6 +219,20 @@ def refeicao(request, id):
 
             messages.add_message(request, constants.SUCCESS, 'Refeição cadastrada')
             return redirect(f'/plano_alimentar/{id}')
+
+
+def opcao(request, id):
+    if request.method == "POST":
+        id_refeicao = request.POST.get('refeicao')
+        imagem = request.FILES.get('imagem')
+        descricao = request.POST.get("descricao")
+        o1 = Opcao(refeicao_id=id_refeicao,
+                    imagem=imagem,
+                    descricao=descricao)
+
+        o1.save()
+        messages.add_message(request, constants.SUCCESS, 'Opcao cadastrada')
+        return redirect(f'/plano_alimentar/{id}')
 
 
         
